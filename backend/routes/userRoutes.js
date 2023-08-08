@@ -7,5 +7,7 @@ userRouter.post('/register', controller.register)
 
 userRouter.post('/login', controller.login)
 
+userRouter.post('/register-vehicle/:id', controller.reg_vehicle)
+
 
 export default userRouter

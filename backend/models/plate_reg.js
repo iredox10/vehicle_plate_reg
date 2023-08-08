@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const plate = new mongoose.Schema({
+    OwnerEmail:{
+        type: String,
+        required: true
+    },
     vehicleName:{
         type: String,
         required: true,

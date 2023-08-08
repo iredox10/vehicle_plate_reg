@@ -3,6 +3,7 @@ import mongooseConnect from './config/mongooseConnect.js'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import userRouter from './routes/userRoutes.js'
+import adminRouter from './routes/adminRoutes.js'
 
 dotenv.config()
 
@@ -13,6 +14,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
 app.use('/user', userRouter)
+app.use('/admin', adminRouter)
 
 
 mongooseConnect()

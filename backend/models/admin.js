@@ -9,10 +9,6 @@ const admin = new mongoose.Schema({
         type: String,
         required: true
     },
-    email:{
-        type: String,
-        required: true
-    },
     password:{
         type: String,
         required: true
@@ -27,6 +23,6 @@ const admin = new mongoose.Schema({
     }]
 },{timestamps:true})
 
-const Admin = mongoose.model('Admin',admin)\
+const Admin = mongoose.model('Admin',admin)
 
 export default Admin
