@@ -9,6 +9,10 @@ const plate = new mongoose.Schema({
         type: String,
         required: true,
     },
+    apply:{
+        type:Boolean,
+        default: false
+    },
     plateNumber: String,
     plateType: String,
     issueDate: Date,

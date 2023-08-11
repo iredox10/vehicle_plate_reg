@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import User from '../models/user.js'
 import Vehicle from '../models/vehicle_reg.js'
+import Plate from '../models/plate_reg.js'
 export const register = async (req,res) =>{
     try{
         const hashedPassword = await bcrypt.hash(req.body.password,4)
@@ -36,6 +37,27 @@ export const login = async (req, res) => {
     }
 };
 
+export const get_user = async(req,res)=>{
+    try {
+        const user = await User.findById(req.params.id)
+        const vehicles = await Vehicle.find({vcOwner: user.email})
+        res.json({user,vehicles})
+    } catch (err) {
+        res.status(404).json(err.message)
+    }
+}
+
+export const update_user = async(req,res)=>{
+    try{
+        const user = await User.findByIdAndUpdate(req.params.id,req.body,{
+            new:true
+        })
+        res.status(201).json(user)
+    }catch(err){
+        res.status(404).json(err.message)
+    }
+}
+
 export const reg_vehicle = async (req,res) =>{
     try{
         const user = await User.findById(req.params.id)
@@ -50,8 +72,34 @@ export const reg_vehicle = async (req,res) =>{
             vcCapacity: req.body.vcCapacity
         })
         user.vehicles.push(vehicle)
+        user.save()
         res.json(user)
     }catch(err){
         res.status(400).json(err.message)
+    }
+}
+export const get_vehicle = async (req,res)=>{
+    try {
+        const vehicle = await Vehicle.findById(req.params.id)
+        const plates = await Plate.find({vehicleName:vehicle.vcType})
+        res.status(200).json({vehicle,plates})
+    } catch (err) {
+        res.status(404).json(err.message)
+    }
+}
+export const apply_plate = async (req,res) =>{
+    try {
+        const vehicle = await Vehicle.findById(req.params.id)
+        const plate = await Plate.create({
+            OwnerEmail: vehicle.vcOwner,
+            vehicleName: vehicle.vcType,
+            apply: req.body.apply
+        })
+       const app = await Vehicle.findByIdAndUpdate(req.params.id,{
+            appliedForPlate: true
+        }, {new:true})
+        res.status(201).json({vehicle,plate,app})
+    } catch (err) {
+        res.status(404).json(err.message)
     }
 }

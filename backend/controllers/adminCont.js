@@ -33,10 +33,19 @@ export const register_issuer = async (req,res) =>{
         const admin = await Admin.findById(req.params.id)
         const issuer = await Issuer.create(req.body)
         admin.issuers.push(issuer)
+        admin.save()
         res.status(201).json({issuer,admin})
     }catch(err){
         res.status(400).json(err.message)
     }
 }
 
-
+export const get_admin = async (req,res) => {
+    try{
+        // const admin = await Admin.findById(req.params.id)
+        const admin = await Admin.findById(req.params.id).populate('issuers')
+        res.status(200).json({admin})
+    }catch(err){
+        res.status(404).json(err.message)
+    }
+}

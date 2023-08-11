@@ -4,12 +4,13 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import userRouter from './routes/userRoutes.js'
 import adminRouter from './routes/adminRoutes.js'
-
+import cors from 'cors'
 dotenv.config()
 
 
 const app = express()
 
+app.use(cors('*'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 

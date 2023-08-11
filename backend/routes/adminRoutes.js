@@ -7,6 +7,8 @@ adminRouter.post('/add-admin',controller.admin)
 
 adminRouter.post('/login', controller.login)
 
-adminRouter.post('/register-issuer/:id', controller.register_issuer)
+adminRouter.get('/get-admin/:id', controller.get_admin)
+
+adminRouter.post('/add-issuer/:id', controller.register_issuer)
 
 export default adminRouter

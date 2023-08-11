@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const vehicle = new mongoose.Schema({
+const vehicleSchema = new mongoose.Schema({
     vcOwner: {
         type: String,
         required: true
@@ -34,8 +34,12 @@ const vehicle = new mongoose.Schema({
         type: String,
         required: true
     },
+    appliedForPlate:{
+        type:Boolean,
+        default: false
+    }
 },{timestamps:true})
 
-const Vehicle = mongoose.model('vehicle',vehicle)
+const Vehicle = mongoose.model('vehicle',vehicleSchema)
 
 export default Vehicle
