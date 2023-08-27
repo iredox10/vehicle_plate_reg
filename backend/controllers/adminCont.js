@@ -1,5 +1,5 @@
 import Admin from '../models/admin.js'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import Issuer from '../models/issuer.js'
 
 export const admin = async (req,res) =>{
