@@ -6,6 +6,7 @@ import Btn from '../components/Btn'
 import path from '../utils/path'
 import axios from 'axios'
 import FormBtn from '../components/FormBtn'
+import Header from '../components/Header'
 
 export const RegisterVehicle = () => {
     const {id} = useParams()
@@ -38,7 +39,7 @@ export const RegisterVehicle = () => {
             const res = await axios.post(`${path}/user/register-vehicle/${id}`,{
                 driverLicense,placeIssue,stateOfReg,engineNumber,vcType,vcCapacity,vcChasisNumber
             })
-            console.log(res.data);
+            navigate(`/user/${id}`)
         } catch (err) {
             console.log(err)
         }
@@ -46,59 +47,62 @@ export const RegisterVehicle = () => {
 
   return (
     <div>
-        <h1>register your vehicle</h1>
-        <div>
-            <form onSubmit={handleSubmit}>
-                {err && <p>{err}</p> }
-                <FormInput
-                type={'text'}
-                labelFor={'driverLicense'}
-                lableName={'driverLicense'}
-                onchange={e => setDriverLicense(e.target.value) }
-                />
-                <FormInput
-                type={'text'}
-                labelFor={'placeIssue'}
-                lableName={'placeIssue'}
-                onchange={e => setplaceIssue(e.target.value) }
-                />
-                <FormInput
-                type={'text'}
-                labelFor={'stateOfReg'}
-                lableName={'stateOfReg'}
-                onchange={e => setStateOfReg(e.target.value) }
-                />
+      <Header />
+      <div>
+        <div className="bg-green-400 m-6 md:w-2/4 md:mx-auto p-2">
+          <h1 className="bg-green-700 text-white p-2">Register Your Vehicle</h1>
+          <form onSubmit={handleSubmit}>
+            {err && <p>{err}</p>}
+            <FormInput
+              type={"text"}
+              labelFor={"driverLicense"}
+              lableName={"driverLicense"}
+              onchange={(e) => setDriverLicense(e.target.value)}
+            />
+            <FormInput
+              type={"text"}
+              labelFor={"placeIssue"}
+              lableName={"placeIssue"}
+              onchange={(e) => setplaceIssue(e.target.value)}
+            />
+            <FormInput
+              type={"text"}
+              labelFor={"stateOfReg"}
+              lableName={"state of registration"}
+              onchange={(e) => setStateOfReg(e.target.value)}
+            />
 
-                <FormInput
-                type={'text'}
-                labelFor={'vcChasisNumber'}
-                lableName={'vcChasisNumber'}
-                onchange={e => setvcChasisNumber(e.target.value) }
-                />
-                
-                <FormInput
-                type={'text'}
-                labelFor={'engineNumber'}
-                lableName={'engineNumber'}
-                onchange={e => setEngineNumber(e.target.value) }
-                />
+            <FormInput
+              type={"text"}
+              labelFor={"vcChasisNumber"}
+              lableName={"vehicle ChasisNumber"}
+              onchange={(e) => setvcChasisNumber(e.target.value)}
+            />
 
-                <FormInput
-                type={'text'}
-                labelFor={'vcType'}
-                lableName={'vcType'}
-                onchange={e => setVcType(e.target.value) }
-                />
+            <FormInput
+              type={"text"}
+              labelFor={"engineNumber"}
+              lableName={"engine Number"}
+              onchange={(e) => setEngineNumber(e.target.value)}
+            />
 
-                <FormInput
-                type={'number'}
-                labelFor={'vcCapicity'}
-                lableName={'vcCapicity'}
-                onchange={e => setVcCapacity(e.target.value) }
-                />
-                <FormBtn text={'add vehicle'} />
-            </form>
+            <FormInput
+              type={"text"}
+              labelFor={"vcType"}
+              lableName={"vehicle Type"}
+              onchange={(e) => setVcType(e.target.value)}
+            />
+
+            <FormInput
+              type={"number"}
+              labelFor={"vcCapicity"}
+              lableName={"vehicle Capicity"}
+              onchange={(e) => setVcCapacity(e.target.value)}
+            />
+            <FormBtn text={"add vehicle"} />
+          </form>
         </div>
+      </div>
     </div>
-  )
+  );
 }

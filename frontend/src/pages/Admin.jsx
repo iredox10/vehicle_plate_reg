@@ -6,6 +6,7 @@ import { useState } from "react"
 import Btn from "../components/Btn"
 import FormInput from "../components/FormInput"
 import FormBtn from "../components/FormBtn"
+import Header from "../components/Header"
 
 const Admin = () =>{
     const {id} =useParams()
@@ -33,60 +34,78 @@ const Admin = () =>{
         }
     }
 
-    return(
-
+    return (
+      <div>
+        <Header />
         <div>
-            {admin && 
+          {admin && (
             <div>
-                <div>
-            {admin.fullName}
-            {admin.email}
-            <Btn text={'add issuer'} onclick={() => setShowModel(!showModel)} />
-            </div>
-            <div>
-                {admin && 
-                <div>
-                    {admin.admin.issuers.map(issuer =>(
-                        <div key={issuer._id}>
-                            <p><span>full name:</span>{issuer.fullName}</p>
-                        </div>
+              <div>
+                <p className="text-white my-2">
+                  <span className="font-bold">full Name: </span>
+                  {admin.admin.fullName}
+                </p>
+                <p className="text-white my-2">
+                  <span className="font-bold">email: </span>
+                  {admin.admin.email}
+                </p>
+                <Btn
+                  text={"add issuer"}
+                  onclick={() => setShowModel(!showModel)}
+                />
+              </div>
+              <div>
+                {admin && (
+                  <div>
+                    {admin.admin.issuers.map((issuer) => (
+                      <div key={issuer._id}>
+                        <p>
+                          <span>full name:</span>
+                          {issuer.fullName}
+                        </p>
+                      </div>
                     ))}
-                </div>
-                }
+                  </div>
+                )}
+              </div>
             </div>
-            </div>
-            }
+          )}
 
-            {showModel && <div className="md:w-[50%] mx-auto bg-green-400 p-2 shadow-lg shadow-green-600">
-                <form onSubmit={handleSubmit}>
+          {showModel && (
+            <div className="md:w-[50%] mx-auto bg-green-400 p-2 shadow-lg shadow-green-600">
+              <form onSubmit={handleSubmit}>
                 <div className="flex items-center justify-between">
-                <h1>add issuer</h1>
-                <button onClick={() => setShowModel(!showModel)}>close</button>
+                  <h1>add issuer</h1>
+                  <button onClick={() => setShowModel(!showModel)}>
+                    close
+                  </button>
                 </div>
                 {err && <p>{err}</p>}
                 <FormInput
-                type={'text'}
-                labelFor={'fullName'}
-                lableName={'fullName'}
-                onchange={e => setFullName(e.target.value)}
-                 />
+                  type={"text"}
+                  labelFor={"fullName"}
+                  lableName={"fullName"}
+                  onchange={(e) => setFullName(e.target.value)}
+                />
                 <FormInput
-                type={'email'}
-                labelFor={'email'}
-                lableName={'email'}
-                onchange={e => setEmail(e.target.value)}
-                 />
+                  type={"email"}
+                  labelFor={"email"}
+                  lableName={"email"}
+                  onchange={(e) => setEmail(e.target.value)}
+                />
                 <FormInput
-                type={'password'}
-                labelFor={'password'}
-                lableName={'password'}
-                onchange={e => setPassword(e.target.value)}
-                 />
-                <FormBtn text={'add'} />
-                </form>
-                </div>}
+                  type={"password"}
+                  labelFor={"password"}
+                  lableName={"password"}
+                  onchange={(e) => setPassword(e.target.value)}
+                />
+                <FormBtn text={"add"} />
+              </form>
+            </div>
+          )}
         </div>
-    )
+      </div>
+    );
 }
 
 export default Admin

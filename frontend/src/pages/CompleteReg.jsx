@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormInput from '../components/FormInput'
 import FormBtn from '../components/FormBtn'
 import axios from 'axios'
 import path from '../utils/path'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import Header from '../components/Header'
+import UseFetch from '../hooks/UseFetch'
 
 export const CompleteReg = () => {
+    
     const [NIN, setNIN] = useState('')
     const [stateOfOrigin, setStateOfOrigin] = useState('')
     const [lga, setLga] = useState('')
@@ -17,6 +20,24 @@ export const CompleteReg = () => {
     const [err, setErr] = useState('')
 
     const {id} = useParams()
+    const {
+      data: user,
+      error,
+      loading,
+    } = UseFetch(`${path}/user/get-user/${id}`);
+
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        setTimeout(() =>{
+            setNIN(user.user.NIN) 
+            setStateOfOrigin(user.user.stateOfOrigin)
+            setLga(user.user.lga)
+            setHomeTown(user.user.homeTown)
+            setDateOfBirth(user.user.dateOfBirth)
+
+        },100)
+    },[NIN,stateOfOrigin,lga,homeTown,dateOfBirth])
 
     const handleSubmit = async(e) =>{
         e.preventDefault()
@@ -28,7 +49,7 @@ export const CompleteReg = () => {
             const res = await axios.patch(`${path}/user/update-user/${id}`,{
                 NIN,stateOfOrigin,lga,homeTown,dateOfBirth,gender,maritalStatus,religion
             })
-            console.log(res.data);
+            navigate(`/user/${id}`)
         }catch(err){
             console.log(err)
         }
@@ -36,77 +57,111 @@ export const CompleteReg = () => {
 
   return (
     <div>
-        <div>
-            <form onSubmit={handleSubmit}>
-                {err && <p>{err}</p>}
-                <FormInput
-                type={'text'}
-                name={"NIN"}
-                labelFor={'NIN'}
-                lableName={"NIN"}
-                onchange={e => setNIN(e.target.value)}
-                />
-                <FormInput
-                type={'text'}
-                name={'stateOfOrigin'}
-                labelFor={'stateOforigin'}
-                lableName={'stateOfOrigin'}
-                onchange={e => setStateOfOrigin(e.target.value)}
-                />
-                <FormInput
-                type={'text'}
-                name={'lga'}
-                labelFor={'lga'}
-                lableName={'local government'}
-                onchange={e => setLga(e.target.value)}
-                />
-                <FormInput
-                type={'text'}
-                name={'homeTown'}
-                labelFor={'homeTown'}
-                lableName={'home Town'}
-                onchange={e => setHomeTown(e.target.value)}
-                />
+      <Header />
+      <div className="bg-green-400 m-6 md:w-2/4 md:mx-auto p-2">
+        <form onSubmit={handleSubmit}>
+          <h1 className="bg-green-700 text-white p-2">Complete Registration</h1>
+          {err && <p>{err}</p>}
+          <FormInput
+            type={"text"}
+            name={"NIN"}
+            labelFor={"NIN"}
+            lableName={"NIN"}
+            value={NIN}
+            onchange={(e) => setNIN(e.target.value)}
+          />
+          <FormInput
+            type={"text"}
+            name={"stateOfOrigin"}
+            labelFor={"stateOforigin"}
+            lableName={"stateOfOrigin"}
+            value={stateOfOrigin}
+            onchange={(e) => setStateOfOrigin(e.target.value)}
+          />
+          <FormInput
+            type={"text"}
+            name={"lga"}
+            labelFor={"lga"}
+            lableName={"local government"}
+            value={lga}
+            onchange={(e) => setLga(e.target.value)}
+          />
+          <FormInput
+            type={"text"}
+            name={"homeTown"}
+            labelFor={"homeTown"}
+            lableName={"home Town"}
+            value={homeTown}
+            onchange={(e) => setHomeTown(e.target.value)}
+          />
 
-                <FormInput
-                type={'date'}
-                name={'dateOfBirth'}
-                labelFor={'dateOfBirth'}
-                lableName={'date of birth'}
-                onchange={e => setDateOfBirth(e.target.value)}
-                />
+          <FormInput
+            type={"date"}
+            name={"dateOfBirth"}
+            labelFor={"dateOfBirth"}
+            lableName={"date of birth"}
+            value={dateOfBirth}
+            onchange={(e) => setDateOfBirth(e.target.value)}
+          />
 
-                <div>
-                    <label htmlFor="gender">gender</label>
-                    <div className='flex gap-2 capitalize items-center'>
-                    <label htmlFor="male">male</label>
-                    <input type="radio" value='male' name='gender'  onChange={e=> setGender(e.target.value)} />
-                    </div>
-                    <div className='flex gap-2 capitalize items-center'>
-                    <label htmlFor="female">female</label>
-                    <input type="radio" value='female' name='gender' onChange={e=> setGender(e.target.value)} />
-                    </div>
-                </div>
-                <div className='flex flex-col'>
-                    <label htmlFor="maritalStatus">marital status</label>
-                <select className='border-2 border-green-600' name="maritalStatus" id="maritalStatus" onChange={e=> setMaritalStatus(e.target.value)}>
-                    <option value="single">single</option>
-                    <option value="married">married</option>
-                    <option value="divorced">divorced</option>
-                    <option value="widow">widow</option>
-                </select>
-                </div>
-                <div className='flex flex-col'>
-                    <label htmlFor="religion">religion</label>
-                <select className='border-2 border-green-600' name="religion" id="religion" onChange={e => setReligion(e.target.value)}>
-                    <option value="muslim">muslim</option>
-                    <option value="christian">christian</option>
-                    <option value="jew">jew</option>
-                </select>
-                </div>
-                <FormBtn text={'submit'} />
-            </form>
-        </div>
+          <div>
+            <label htmlFor="gender">gender</label>
+            <div className="flex gap-2 capitalize items-center">
+              <label htmlFor="male">male</label>
+              <input
+                type="radio"
+                value="male"
+                name="gender"
+                onChange={(e) => setGender(e.target.value)}
+              />
+            </div>
+            <div className="flex gap-2 capitalize items-center">
+              <label htmlFor="female">female</label>
+              <input
+                type="radio"
+                value="female"
+                name="gender"
+                onChange={(e) => setGender(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col my-2">
+            <label htmlFor="maritalStatus">marital status</label>
+            <select
+              className="p-2 border-2 border-green-600"
+              name="maritalStatus"
+              id="maritalStatus"
+              onChange={(e) => setMaritalStatus(e.target.value)}
+            >
+              <option selected disabled>
+                select status
+              </option>
+              <option value="single">single</option>
+              <option value="married">married</option>
+              <option value="divorced">divorced</option>
+              <option value="widow">widow</option>
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="religion">Religion</label>
+            <select
+              className="p-2 mb-2 border-2 border-green-700"
+              name="religion"
+              id="religion"
+              onChange={(e) => setReligion(e.target.value)}
+            >
+              <option selected disabled>
+                choose religion
+              </option>
+              <option value="muslim">muslim</option>
+              <option value="christian">christian</option>
+              <option value="jew">jew</option>
+              <option value="jew">others</option>
+            </select>
+          </div>
+          <FormBtn text={"submit"} />
+        </form>
+      </div>
     </div>
-  )
+  );
 }

@@ -9,6 +9,8 @@ import Vehicle from './pages/Vehicle'
 import AdminLogin from './pages/AdminLogin'
 import Admin from './pages/Admin'
 import IssuerLogin from './pages/IssuerLogin'
+import NotFound from './pages/NotFound'
+import Issuer from './pages/Issuer'
 
 function App() {
   return (
@@ -27,7 +29,11 @@ function App() {
         <Route path='/admin/:id' element={<Admin />} />
 
         <Route path='/issuer-login' element={<IssuerLogin />} />
-        {/* <Route path='/admin/:id' element={<Issu />} /> */}
+
+        
+        <Route path='/issuer/:id' element={<Issuer />} />
+
+        <Route path='*' element={<NotFound />} />
 
 
       </Routes>

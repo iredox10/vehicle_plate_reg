@@ -3,7 +3,7 @@ import FormInput from '../components/FormInput'
 import Header from '../components/Header'
 import { useState } from 'react'
 import FormBtn from '../components/FormBtn'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import path from '../utils/path'
 
 const Register = () => {
@@ -42,11 +42,11 @@ const Register = () => {
   return (
     <div>
         <Header />
-        <div className='md:w-[50%] mx-auto my-5 border-2 border-green-700 p-2'>
+        <div className='bg-green-400 mx-3 my-6 p-2 md:w-2/4 md:mx-auto'>
             <form onSubmit={handleSubmit}>
                 {err && <p>{err}</p>}
                 <h1 className='bg-green-700 p-2 text-white font-bold text-2xl'>Register</h1>
-                <div className='flex gap-2'>
+                <div className=''>
                 <FormInput
                 type={'text'}
                 labelFor={'firstName'}
@@ -111,8 +111,10 @@ const Register = () => {
                 onchange={e => setConfirmPassword(e.target.value)}
                 name={'confirmPassword'}
                 />
-                <FormBtn text={'submit'} />
+                <FormBtn text={'register'} />
             </form>
+            <p className='my-2'>Already have an account? <Link to={'/login'} className='underline hover:text-white'>login</Link></p>
+
         </div>
     </div>
   )
