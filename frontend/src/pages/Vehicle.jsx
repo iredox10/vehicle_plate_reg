@@ -82,7 +82,7 @@ const Vehicle = () => {
           )}
         </div>
         <div>
-          {vehicle && vehicle.vehicle.appliedForPlate == false ? (
+          {vehicle && vehicle.vehicle.plateNumber  ? (
             <div className="bg-green-700 shadow-lg shadow-green-500 w-full p-2">
               <form onSubmit={handleSubmit}>
                 <h1 className="text-white capitalize font-bold">

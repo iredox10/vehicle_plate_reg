@@ -1,23 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const plate = new mongoose.Schema({
-    OwnerEmail:{
-        type: String,
-        required: true
+const plate = new mongoose.Schema(
+  {
+    ownerEmail: {
+      type: String,
+      required: true,
     },
-    vehicleName:{
-        type: String,
-        required: true,
+    vehicleName: {
+      type: String,
+      required: true,
     },
-    apply:{
-        type:Boolean,
-        default: false
-    },
-    plateNumber: String,
-    plateType: String,
-    issueDate: Date,
-    
-},{timestamps:true})
+    plateNumber: {
+      type: String,
+      required: true
+    }
+    // plateType: String,
+  },
+  { timestamps: true }
+);
 
-const Plate = mongoose.model('Plate',plate)
-export default Plate
+const Plate = mongoose.model("Plate", plate);
+export default Plate;

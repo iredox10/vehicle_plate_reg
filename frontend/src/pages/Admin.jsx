@@ -17,7 +17,7 @@ const Admin = () =>{
     const [password, setPassword] = useState('')
     const [err, setErr] = useState('')
 
-    console.log(admin)
+
     const handleSubmit = async(e)=>{
         e.preventDefault()
         if(!fullName || !email || !password){
@@ -39,8 +39,11 @@ const Admin = () =>{
         <Header />
         <div>
           {admin && (
-            <div>
+            <div className="flex items-center justify-between p-4">
               <div>
+                <h1 className="capitalize underline text-white text-2xl font-bold">
+                  admin info
+                </h1>
                 <p className="text-white my-2">
                   <span className="font-bold">full Name: </span>
                   {admin.admin.fullName}
@@ -57,10 +60,13 @@ const Admin = () =>{
               <div>
                 {admin && (
                   <div>
+                    <h1 className="capitalize underline text-white text-2xl font-bold">
+                      issuers list
+                    </h1>
                     {admin.admin.issuers.map((issuer) => (
                       <div key={issuer._id}>
-                        <p>
-                          <span>full name:</span>
+                        <p className="capitalize">
+                          <span>issuer name:</span>
                           {issuer.fullName}
                         </p>
                       </div>

@@ -24,7 +24,7 @@ const User = () => {
                 welcom {user.user.firstName} {user.user.lastName}
               </h1>
               <div className="flex gap-10 ">
-                <div className="my-3">
+                <div className="my-3 capitalize">
                   <p>bio info</p>
                   <p className="text-white my-2">
                     <span className="font-bold">full Name: </span>
@@ -47,7 +47,7 @@ const User = () => {
                     {user.user.occupation}
                   </p>
                 </div>
-                <div>
+                <div className="capitalize">
                   <p>contact info</p>
                   {!user.user.NIN ? (
                     <p className="font-bold text-white capitalize">

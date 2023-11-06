@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import userRouter from './routes/userRoutes.js'
 import adminRouter from './routes/adminRoutes.js'
 import cors from 'cors'
+import issuerRouter from './routes/issuerRoutes.js'
 dotenv.config()
 
 
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 app.use('/user', userRouter)
 app.use('/admin', adminRouter)
+app.use('/issuer', issuerRouter)
 
 
 mongooseConnect()

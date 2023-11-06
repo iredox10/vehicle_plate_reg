@@ -5,6 +5,7 @@ import { useState } from 'react'
 import FormBtn from '../components/FormBtn'
 import { Link, useNavigate } from 'react-router-dom'
 import path from '../utils/path'
+import { ErrorMsg } from '../components/ErrorMsg'
 
 const Register = () => {
     const [firstName, setFirstName] = useState('')
@@ -44,9 +45,9 @@ const Register = () => {
         <Header />
         <div className='bg-green-400 mx-3 my-6 p-2 md:w-2/4 md:mx-auto'>
             <form onSubmit={handleSubmit}>
-                {err && <p>{err}</p>}
                 <h1 className='bg-green-700 p-2 text-white font-bold text-2xl'>Register</h1>
                 <div className=''>
+                {err && <ErrorMsg err={err} /> }
                 <FormInput
                 type={'text'}
                 labelFor={'firstName'}

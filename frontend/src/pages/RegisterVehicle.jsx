@@ -31,9 +31,10 @@ export const RegisterVehicle = () => {
         }
         if(user.NIN === ''){
             setErr('please complete registration first!!')
-            // setTimeout(()=>{
-            //     navigate(`/complete-registration/${id}`)
-            // },3000)
+            setTimeout(()=>{
+                (`/complete-registration/${id}`)
+            },3000)
+            return
         }
         try {
             const res = await axios.post(`${path}/user/register-vehicle/${id}`,{

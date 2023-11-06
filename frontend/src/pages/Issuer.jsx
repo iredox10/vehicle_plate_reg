@@ -37,6 +37,7 @@ const Issuer = () => {
     try {
       const res = await axios.patch(`${path}/issuer/assign-plate/${vehicleId}/${id}`,{plateNumber});
       console.log(res.data);
+      setShowModel(!showModel)
     } catch (err) {
       console.log(err);
     }
@@ -93,10 +94,8 @@ const Issuer = () => {
           ))}
       </table>
       {showModel && (
-        <div className="fixed top-2/4 left-2/4 w-1/4 h-1/3 bg-green-300 bg-opacity-50 flex justify-center items-center">
-          <div>
-            
-          </div>
+        <div className="p-2 fixed top-1/4 left-2/4 w-1/4 h-1/3 bg-green-300 bg-opacity-50">
+          <button onClick={() =>setShowModel(!showModel)}>close</button>
           <form onSubmit={handleAssign}>
             <FormInput
               type="text"

@@ -5,6 +5,7 @@ import path from '../utils/path'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import { ErrorMsg } from '../components/ErrorMsg'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -15,13 +16,15 @@ const Login = () => {
       e.preventDefault()
       if(!email || !password){
         setErr('all field are required')
+        return
       }
       try {
         const res = await axios.post(`${path}/user/login`,{email,password})
         const user = res.data
         navigate(`/user/${user._id}`)
       } catch (error) {
-        console.log(error.response.data);        
+        console.log(error.response.data.error);        
+        setErr(error.response.data.error)
       }
     }
 
@@ -30,8 +33,8 @@ const Login = () => {
       <Header />
     <div className='bg-green-400 mx-3 my-6 p-2 md:w-2/4 md:mx-auto'>
        <form onSubmit={handleSubmit}>
-                {err && <p>{err}</p>}
                 <h1 className='bg-green-700 p-2 text-white font-bold text-2xl'>Login</h1>
+                {err && <ErrorMsg err={err} />}
                 <FormInput
                 type='email'
                 labelFor='email'

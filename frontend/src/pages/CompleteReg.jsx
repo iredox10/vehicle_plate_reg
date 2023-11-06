@@ -1,59 +1,75 @@
-import React, { useEffect, useState } from 'react'
-import FormInput from '../components/FormInput'
-import FormBtn from '../components/FormBtn'
-import axios from 'axios'
-import path from '../utils/path'
-import { useNavigate, useParams } from 'react-router-dom'
-import Header from '../components/Header'
-import UseFetch from '../hooks/UseFetch'
+import React, { useEffect, useState } from "react";
+import FormInput from "../components/FormInput";
+import FormBtn from "../components/FormBtn";
+import axios from "axios";
+import path from "../utils/path";
+import { useNavigate, useParams } from "react-router-dom";
+import Header from "../components/Header";
+import UseFetch from "../hooks/UseFetch";
+import { ErrorMsg } from "../components/ErrorMsg";
 
 export const CompleteReg = () => {
-    
-    const [NIN, setNIN] = useState('')
-    const [stateOfOrigin, setStateOfOrigin] = useState('')
-    const [lga, setLga] = useState('')
-    const [homeTown, setHomeTown] = useState('')
-    const [dateOfBirth, setDateOfBirth] = useState('')
-    const [gender, setGender] = useState('')
-    const [maritalStatus, setMaritalStatus] = useState('')
-    const [religion, setReligion] = useState('')
-    const [err, setErr] = useState('')
+  const [NIN, setNIN] = useState("");
+  const [stateOfOrigin, setStateOfOrigin] = useState("");
+  const [lga, setLga] = useState("");
+  const [homeTown, setHomeTown] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState("");
+  const [religion, setReligion] = useState("");
+  const [err, setErr] = useState("");
 
-    const {id} = useParams()
-    const {
-      data: user,
-      error,
-      loading,
-    } = UseFetch(`${path}/user/get-user/${id}`);
+  const { id } = useParams();
+  const {
+    data: user,
+    error,
+    loading,
+  } = UseFetch(`${path}/user/get-user/${id}`);
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    useEffect(()=>{
-        setTimeout(() =>{
-            setNIN(user.user.NIN) 
-            setStateOfOrigin(user.user.stateOfOrigin)
-            setLga(user.user.lga)
-            setHomeTown(user.user.homeTown)
-            setDateOfBirth(user.user.dateOfBirth)
-
-        },100)
-    },[NIN,stateOfOrigin,lga,homeTown,dateOfBirth])
-
-    const handleSubmit = async(e) =>{
-        e.preventDefault()
-        if(!NIN || !stateOfOrigin || !lga || !homeTown || !dateOfBirth || !gender || !maritalStatus || !religion){
-            setErr("fill all the fields ")
-            return
-        }
-        try{
-            const res = await axios.patch(`${path}/user/update-user/${id}`,{
-                NIN,stateOfOrigin,lga,homeTown,dateOfBirth,gender,maritalStatus,religion
-            })
-            navigate(`/user/${id}`)
-        }catch(err){
-            console.log(err)
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      !NIN ||
+      !stateOfOrigin ||
+      !lga ||
+      !homeTown ||
+      !dateOfBirth ||
+      !gender ||
+      !maritalStatus ||
+      !religion
+    ) {
+      setErr("fill all the fields ");
+      console.log(NIN, stateOfOrigin, lga, homeTown, dateOfBirth,gender,maritalStatus,religion);
+      return;
     }
+    try {
+      const res = await axios.patch(`${path}/user/update-user/${id}`, {
+        NIN,
+        stateOfOrigin,
+        lga,
+        homeTown,
+        dateOfBirth,
+        gender,
+        maritalStatus,
+        religion,
+      });
+      navigate(`/user/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     user && setNIN(user.user.NIN);
+  //     user && setStateOfOrigin(user.user.stateOfOrigin);
+  //     user && setLga(user.user.lga);
+  //     user && setHomeTown(user.user.homeTown);
+  //     user && setDateOfBirth(user.user.dateOfBirth);
+  //   }, 2000);
+  // }, [NIN, stateOfOrigin, user, lga, homeTown, dateOfBirth]);
 
   return (
     <div>
@@ -61,7 +77,7 @@ export const CompleteReg = () => {
       <div className="bg-green-400 m-6 md:w-2/4 md:mx-auto p-2">
         <form onSubmit={handleSubmit}>
           <h1 className="bg-green-700 text-white p-2">Complete Registration</h1>
-          {err && <p>{err}</p>}
+          {err && <ErrorMsg err={err} />}
           <FormInput
             type={"text"}
             name={"NIN"}
@@ -164,4 +180,4 @@ export const CompleteReg = () => {
       </div>
     </div>
   );
-}
+};

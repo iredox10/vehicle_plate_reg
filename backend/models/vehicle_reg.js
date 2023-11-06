@@ -37,6 +37,9 @@ const vehicleSchema = new mongoose.Schema({
     appliedForPlate:{
         type:Boolean,
         default: false
+    },
+    plateNumber: {
+        type: String,
     }
 },{timestamps:true})
 
