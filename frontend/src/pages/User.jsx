@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import UseFetch from "../hooks/UseFetch";
 import path from "../utils/path";
 import Header from "../components/Header";
@@ -12,7 +12,12 @@ const User = () => {
     error,
     loading,
   } = UseFetch(`${path}/user/get-user/${id}`);
-  console.log(user);
+  console.log(user)
+  const navigate= useNavigate()
+  const handleRegisterVehicle = () => {
+    !user.user.NIN ? navigate(`/complete-registration/${id}`) : navigate(`/register-vehicle/${id}`)
+  }
+
   return (
     <div>
       <Header />
@@ -65,8 +70,8 @@ const User = () => {
                         {user.user.maritalStatus}
                       </p>
                       <p className="text-white my-2">
-                        {user.user.gender}
                         <span className="font-bold">gender: </span>
+                        {user.user.gender}
                       </p>
                       <p className="text-white my-2">
                         <span className="font-bold">state of origin: </span>
@@ -86,12 +91,13 @@ const User = () => {
           </NavLink>
         </div>
         <div>
-          <NavLink
-            to={`/register-vehicle/${id}`}
+          <button
+            // to={`/register-vehicle/${id}`}
+            onClick={handleRegisterVehicle}
             className="bg-white p-2 my-2 b capitalize"
           >
             register your vehicle
-          </NavLink>
+          </button>
           <div>
             {user && (
               <div className="my-5">

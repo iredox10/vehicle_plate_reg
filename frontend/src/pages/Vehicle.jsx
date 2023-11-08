@@ -10,7 +10,7 @@ const Vehicle = () => {
     const {id} = useParams()
     const navigate = useNavigate()
     const {data:vehicle,error,loading} = UseFetch(`${path}/user/get-vehicle/${id}`)
-    console.log(vehicle)
+    // console.log(vehicle)
 
     const [apply, setApply] = useState(false)
     // const [applied, setApplied] = useState(false)
@@ -82,7 +82,7 @@ const Vehicle = () => {
           )}
         </div>
         <div>
-          {vehicle && vehicle.vehicle.plateNumber  ? (
+          {vehicle && vehicle.vehicle.appliedForPlate == false ? (
             <div className="bg-green-700 shadow-lg shadow-green-500 w-full p-2">
               <form onSubmit={handleSubmit}>
                 <h1 className="text-white capitalize font-bold">
@@ -104,7 +104,7 @@ const Vehicle = () => {
                       type="radio"
                       name="apply"
                       id="apply"
-                      onChange={(e) => setApply(false)}
+                      onChange={() => setApply(false)}
                     />
                   </div>
                 </div>

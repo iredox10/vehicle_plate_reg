@@ -60,42 +60,51 @@ const Issuer = () => {
           </div>
         )}
       </div>
-      <table className="">
-        <tr className="flex justify-between items-center">
-          <th>vehicle owner</th>
-          <th>vehicle name</th>
-          <th>driver license</th>
-          <th>plate number</th>
-        </tr>
-        {vehicles &&
-          vehicles.map((vehicle) => (
-            <tr key={vehicle._id} className="flex justify-between items-center">
-              <td>{vehicle.vcOwner}</td>
-              <td>{vehicle.vcType}</td>
-              <td>{vehicle.driverLicense}</td>
-              <td>
-                {vehicle.plateNumber ? vehicle.plateNumber : "not assigned"}
-              </td>
-              <td>
-                {!vehicle.plateNumber ? (
-                  <button
-                    onClick={() => handleShowModel(vehicle._id)}
-                    className="bg-white p-2 "
-                  >
-                    assign number
-                  </button>
-                ) : (
-                  <button className="bg-white opacity-60 p-2 " disabled>
-                    assigned
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-      </table>
+      <div className="w-3/4 mx-auto">
+        <table className=" capitalize border-green-500">
+          <tr className="  border border-green-500">
+            <th className="w-full border border-green-500">vehicle owner</th>
+            <th className="w-full border border-green-500">vehicle name</th>
+            <th className="w-full border border-green-500">driver license</th>
+            <th className="w-full border border-green-500">plate number</th>
+          </tr>
+          {vehicles &&
+            vehicles.map((vehicle) => (
+              <tr
+                key={vehicle._id}
+                className="border border-green-500 ">
+                <td className="border border-green-500 w-full">
+                  {vehicle.vcOwner}
+                </td>
+                <td className="border  border-green-500 w-full">
+                  {vehicle.vcType}
+                </td>
+                <td className="border border-green-500 w-full">
+                  {vehicle.driverLicense}
+                </td>
+                <td className="border border-green-500 w-full">
+                  {vehicle.plateNumber ? vehicle.plateNumber : "not assigned"}
+                </td>
+                <td>
+                  {!vehicle.plateNumber ? (
+                    <button
+                      onClick={() => handleShowModel(vehicle._id)}
+                      className="bg-white p-2 ">
+                      assign number
+                    </button>
+                  ) : (
+                    <button className="bg-white opacity-60 p-2 " disabled>
+                      assigned
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+        </table>
+      </div>
       {showModel && (
         <div className="p-2 fixed top-1/4 left-2/4 w-1/4 h-1/3 bg-green-300 bg-opacity-50">
-          <button onClick={() =>setShowModel(!showModel)}>close</button>
+          <button onClick={() => setShowModel(!showModel)}>close</button>
           <form onSubmit={handleAssign}>
             <FormInput
               type="text"

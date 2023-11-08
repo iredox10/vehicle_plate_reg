@@ -2,7 +2,7 @@ import axios from "axios"
 import path from "../utils/path"
 import { useParams } from "react-router-dom"
 import UseFetch from "../hooks/UseFetch"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Btn from "../components/Btn"
 import FormInput from "../components/FormInput"
 import FormBtn from "../components/FormBtn"
@@ -16,7 +16,13 @@ const Admin = () =>{
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [err, setErr] = useState('')
-
+    const [newUser, setNewUser] = useState(false)
+  // useEffect(()=>{
+  //   const fetct = () =>{
+  //     fetch(`${path}/admin/get-admin/${id}`);
+  //   }
+  //   fetct()
+  // }, [id, newUser])
 
     const handleSubmit = async(e)=>{
         e.preventDefault()
@@ -29,6 +35,7 @@ const Admin = () =>{
             const res = await axios.post(`${path}/admin/add-issuer/${id}`,{fullName,email,password})
             console.log(res.data);
             setShowModel(!showModel)
+            setNewUser(true)
         } catch (err) {
             console.log(err)
         }

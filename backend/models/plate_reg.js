@@ -12,7 +12,6 @@ const plate = new mongoose.Schema(
     },
     plateNumber: {
       type: String,
-      required: true
     }
     // plateType: String,
   },

@@ -91,15 +91,15 @@ export const apply_plate = async (req,res) =>{
     try {
         const vehicle = await Vehicle.findById(req.params.id)
         const plate = await Plate.create({
-            OwnerEmail: vehicle.vcOwner,
-            vehicleName: vehicle.vcType,
-            apply: req.body.apply
-        })
+          ownerEmail: vehicle.vcOwner,
+          vehicleName: vehicle.vcType,
+          apply: req.body.apply,
+        });
        const app = await Vehicle.findByIdAndUpdate(req.params.id,{
-            appliedForPlate: true
+            appliedForPlate: req.body.apply
         }, {new:true})
-        res.status(201).json({vehicle,plate,app})
+        res.status(201).json({vehicle:vehicle.vcOwner})
     } catch (err) {
-        res.status(404).json(err.message)
+        res.status(400).json(err)
     }
 }
